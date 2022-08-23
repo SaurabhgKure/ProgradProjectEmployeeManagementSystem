@@ -41,7 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET,"/assets/{id}").hasAnyAuthority("ADMIN","MANAGER")
                 .antMatchers(HttpMethod.POST,"/assets").hasAnyAuthority("ADMIN","MANAGER")
                 .antMatchers(HttpMethod.PUT,"/assets/{id}").hasAnyAuthority("ADMIN","MANAGER")
-                .antMatchers(HttpMethod.GET,"/assets").hasAnyAuthority("ADMIN","MANAGER","EMPLOYEE")
+
 
 
 

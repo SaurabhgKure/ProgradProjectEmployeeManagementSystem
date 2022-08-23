@@ -1,10 +1,6 @@
 package com.Quess.EmployeeManagementSystem.Models.Assets;
 
-
-import com.Quess.EmployeeManagementSystem.Models.Organization.Organization;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 
@@ -30,7 +26,7 @@ public class Assets {
     @NotEmpty(message = "Value Can not be Empty")
     private String assetValue;
 
-
+    @Column(nullable = false)
     private int organizationid;
 
 

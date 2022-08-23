@@ -1,10 +1,7 @@
 package com.Quess.EmployeeManagementSystem.Models.Employee;
 
 
-import com.Quess.EmployeeManagementSystem.Models.Organization.Organization;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
@@ -13,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.*;
-import java.util.stream.Collectors;
+
 
 @Data
 @Entity
@@ -46,6 +43,7 @@ public class Employee implements UserDetails{
             regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$")
     private String password;
 
+    @Column(nullable = false)
     private int organizationid;
     @NotEmpty(message = "Role Can not be empty")
     private String role;

@@ -1,21 +1,16 @@
 package com.Quess.EmployeeManagementSystem.exception;
 
-import java.util.Date;
 
-public class ErrorDetail {
+public class ErrorDetails {
 
     private String message;
     private String details;
 
-    public ErrorDetail( String message, String details) {
+    public ErrorDetails( String message, String details) {
         super();
 
         this.message = message;
         this.details = details;
-    }
-
-    public ErrorDetail(){
-
     }
 
 
