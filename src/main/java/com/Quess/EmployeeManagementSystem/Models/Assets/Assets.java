@@ -30,6 +30,7 @@ public class Assets {
     @NotEmpty(message = "Value Can not be Empty")
     private String assetValue;
 
+
     private int organizationid;
 
 

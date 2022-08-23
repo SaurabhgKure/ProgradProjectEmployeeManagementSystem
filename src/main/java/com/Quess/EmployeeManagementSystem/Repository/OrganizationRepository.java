@@ -10,6 +10,4 @@ import java.util.Optional;
 public interface OrganizationRepository extends JpaRepository<Organization,Integer> {
     Optional<Organization> findById(int id);
 
-//    @Query("SELECT name,address from organization where organization.id  ")
-//    ResponseEntity<Organization> getOrganizationIDById(Integer id);
 }

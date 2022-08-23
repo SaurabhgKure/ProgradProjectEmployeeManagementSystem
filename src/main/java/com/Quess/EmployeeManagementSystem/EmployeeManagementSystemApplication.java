@@ -10,17 +10,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 @SpringBootApplication
-public class EmployeeManagementSystemApplication  implements CommandLineRunner {
+public class EmployeeManagementSystemApplication {
 
-	@Autowired
-	private PasswordEncoder passwordEncoder;
 
 	public static void main(String[] args) {
 		SpringApplication.run(EmployeeManagementSystemApplication.class, args);
-	}
-	@Override
-	public void run(String... args) throws Exception {
-		System.out.println(passwordEncoder.encode("Saurabh"));
-
 	}
 }

@@ -35,7 +35,9 @@ public class Employee implements UserDetails{
     private String contact;
     @Min(value = 10000,message = "salary Shoulde be minimum 10000")
     private String salary;
-    @Email(message = "Email is not valid", regexp = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$")
+
+    @Column(unique = true)
+    @Email( message = "Email is not valid", regexp = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$")
     private String email;
    @NotEmpty(message = "Gender can not be Empty")
     private String gender;
