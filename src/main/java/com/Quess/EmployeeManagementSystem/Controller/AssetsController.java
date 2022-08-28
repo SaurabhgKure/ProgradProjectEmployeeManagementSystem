@@ -40,7 +40,7 @@ public class AssetsController {
         return new ResponseEntity<Assets>(service.getAssetById(id),HttpStatus.OK);
     }
     @PutMapping("{id}")
-    public ResponseEntity<Assets> updateAsset(@PathVariable("id")int id,@RequestBody Assets assets)
+    public ResponseEntity<Assets> updateAsset(@PathVariable("id")int id,@RequestBody @Valid Assets assets)
     {
         ;
         return new ResponseEntity<Assets>(service.updateAsset(assets,id), HttpStatus.OK);

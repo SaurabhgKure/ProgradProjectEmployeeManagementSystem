@@ -3,9 +3,7 @@ package com.Quess.EmployeeManagementSystem.Models.Organization;
 
 import com.Quess.EmployeeManagementSystem.Models.Assets.Assets;
 import com.Quess.EmployeeManagementSystem.Models.Employee.Employee;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -18,7 +16,6 @@ import java.util.Set;
 @Data
 @Entity
 @Table(name = "Organization")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 public class Organization  {
 
     public Organization() {

@@ -1,8 +1,7 @@
 package com.Quess.EmployeeManagementSystem.Models.Employee;
 
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -14,7 +13,6 @@ import java.util.*;
 
 @Data
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 @Table(name="Employee")
 public class Employee implements UserDetails{
     public Employee(){
@@ -33,7 +31,6 @@ public class Employee implements UserDetails{
     @Min(value = 10000,message = "salary Shoulde be minimum 10000")
     private String salary;
 
-    @Column(unique = true)
     @Email( message = "Email is not valid", regexp = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$")
     private String email;
    @NotEmpty(message = "Gender can not be Empty")
@@ -43,7 +40,7 @@ public class Employee implements UserDetails{
             regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$")
     private String password;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private int organizationid;
     @NotEmpty(message = "Role Can not be empty")
     private String role;

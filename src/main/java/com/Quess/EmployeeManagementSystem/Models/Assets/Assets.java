@@ -1,15 +1,12 @@
 package com.Quess.EmployeeManagementSystem.Models.Assets;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import lombok.Data;
 
+import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
 @Data
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 @Table(name = "Assets")
 public class Assets {
 
@@ -26,7 +23,7 @@ public class Assets {
     @NotEmpty(message = "Value Can not be Empty")
     private String assetValue;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private int organizationid;
 
 
