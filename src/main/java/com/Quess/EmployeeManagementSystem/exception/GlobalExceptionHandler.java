@@ -18,17 +18,16 @@ public class GlobalExceptionHandler {
 				new ErrorDetails( exception.getMessage(), request.getDescription(false));
 		return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
 	}
-
-
-//	@ExceptionHandler(Exception.class)
-//	public ResponseEntity<?> globalExceptionHandling(Exception exception, WebRequest request){
-//		ErrorDetails errorDetails =
-//				new ErrorDetails( exception.getMessage(), request.getDescription(false));
-//		return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
-//	}
-
-	@ExceptionHandler(ConstraintViolationException.class)
-	public ResponseEntity<String> constraintViolationException(ConstraintViolationException constraintViolationException){
-		return new ResponseEntity<String>("ID Not Match...!!!",HttpStatus.BAD_REQUEST);
+	@ExceptionHandler(EmailAreadyExists.class)
+	public ResponseEntity<?>EmailAlreadyExistsHandling (EmailAreadyExists exception, WebRequest request){
+		ErrorDetails errorDetails =
+				new ErrorDetails( exception.getMessage(), request.getDescription(false));
+		return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
 	}
+
+	@ExceptionHandler(java.sql.SQLIntegrityConstraintViolationException.class)
+	public ResponseEntity<String> constraintViolationException(ConstraintViolationException constraintViolationException){
+		return new ResponseEntity<String>("Enter Correct Organization ID ...!!!",HttpStatus.BAD_REQUEST);
+	}
+
 }

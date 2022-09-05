@@ -3,6 +3,7 @@ package com.Quess.EmployeeManagementSystem.Models.Assets;
 
 import lombok.Data;
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 
 @Data
@@ -16,11 +17,11 @@ public class Assets {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @NotEmpty(message ="Name Can not be empty")
+    @NotEmpty(message ="Name Cannot be empty")
     private String assetName;
-    @NotEmpty(message = "Type Can not be Empty")
+    @NotEmpty(message = "Type Cannot be Empty")
     private String assetType;
-    @NotEmpty(message = "Value Can not be Empty")
+    @Min(value = 1,message = "Minimum value should be 1.")
     private String assetValue;
 
     @Column(nullable = true)

@@ -4,6 +4,7 @@ package com.Quess.EmployeeManagementSystem.Service;
 
 import com.Quess.EmployeeManagementSystem.Models.Employee.Employee;
 import com.Quess.EmployeeManagementSystem.Repository.EmployeeRepository;
+import com.Quess.EmployeeManagementSystem.exception.EmailAreadyExists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,6 +27,9 @@ public class EmployeeServiceIMPL implements EmployeeService {
 
     @Override
     public Employee saveEmployee(Employee employee) {
+
+        if(employeerepo.findByEmail(employee.getEmail()).isPresent()) throw new EmailAreadyExists("Email already exists..!!");
+
         String encodepass=this.passwordEncoder.encode(employee.getPassword());
         employee.setPassword(encodepass);
         return employeerepo.save(employee);
@@ -44,13 +48,21 @@ public class EmployeeServiceIMPL implements EmployeeService {
     @Override
     public Employee updateEmployee(Employee employee, int id) {
         Employee existingDetail=employeerepo.findById(id).orElseThrow(() -> new com.Quess.EmployeeManagementSystem.exception.ResourceNotFoundException("Employee not found"));
-       String encodepass=this.passwordEncoder.encode(employee.getPassword());
+
+        String encodepass=this.passwordEncoder.encode(employee.getPassword());
         employee.setPassword(encodepass);
         existingDetail.setAge(employee.getAge());
-        existingDetail.setEmail(employee.getEmail());
+        if(existingDetail.getEmail().equals(employee.getEmail()) || !(employeerepo.findByEmail(employee.getEmail()).isPresent())) {
+            existingDetail.setEmail(employee.getEmail());
+        }else {
+            throw new EmailAreadyExists("Email already exists..!!");
+        }
         existingDetail.setGender(employee.getGender());
         existingDetail.setContact(employee.getContact());
+        existingDetail.setOrganizationid(employee.getOrganizationid());
         existingDetail.setName(employee.getName());
+        existingDetail.setRole(employee.getRole());
+        existingDetail.setSalary(employee.getSalary());
         employeerepo.save(existingDetail);
         return existingDetail;
     }

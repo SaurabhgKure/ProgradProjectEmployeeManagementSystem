@@ -38,6 +38,7 @@ public class AssetsServiceIMPL implements AssetsService {
         existingDetail.setAssetName(assets.getAssetName());
         existingDetail.setAssetType(assets.getAssetType());
         existingDetail.setAssetValue(assets.getAssetValue());
+        existingDetail.setOrganizationid(assets.getOrganizationid());
         assetsrepo.save(existingDetail);
         return existingDetail;
     }

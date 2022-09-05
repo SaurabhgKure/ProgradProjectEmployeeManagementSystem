@@ -28,7 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.DELETE,"/employee/{id}").hasAnyAuthority("ADMIN")
                 .antMatchers(HttpMethod.GET,"/employee").hasAnyAuthority("ADMIN","MANAGER")
                 .antMatchers(HttpMethod.GET,"/employee/{id}").hasAnyAuthority("ADMIN","MANAGER")
-                .antMatchers(HttpMethod.GET,"/employee/user/{id}").access("@userSecurity.hasUserId(authentication,#id)")
+                .antMatchers(HttpMethod.GET,"/employee/user/{id}").hasAnyAuthority("EMPLOYEE")
 
                 .antMatchers(HttpMethod.DELETE,"/organization/{id}").hasAnyAuthority("ADMIN")
                 .antMatchers(HttpMethod.GET,"/organization/{id}").hasAnyAuthority("ADMIN","MANAGER","EMPLOYEE")
@@ -37,8 +37,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET,"/organization").hasAnyAuthority("ADMIN")
 
                 .antMatchers(HttpMethod.GET,"/assets").hasAnyAuthority("ADMIN","MANAGER","EMPLOYEE")
-                .antMatchers(HttpMethod.DELETE,"/assets/{id}").hasAnyAuthority("ADMIN","MANAGER","EMPLOYEE")
-                .antMatchers(HttpMethod.GET,"/assets/{id}").hasAnyAuthority("ADMIN","MANAGER")
+                .antMatchers(HttpMethod.DELETE,"/assets/{id}").hasAnyAuthority("ADMIN")
+                .antMatchers(HttpMethod.GET,"/assets/{id}").hasAnyAuthority("ADMIN","MANAGER","EMPLOYEE")
                 .antMatchers(HttpMethod.POST,"/assets").hasAnyAuthority("ADMIN","MANAGER")
                 .antMatchers(HttpMethod.PUT,"/assets/{id}").hasAnyAuthority("ADMIN","MANAGER")
 

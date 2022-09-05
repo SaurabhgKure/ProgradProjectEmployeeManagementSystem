@@ -21,21 +21,31 @@ public class Employee implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @Column(nullable = false)
+    @NotEmpty(message = "Name Cannot be Empty...!!! ")
     @Pattern(message="Only characters are allowed", regexp = "^[a-zA-Z ]+$")
     private String name;
+    @Column(nullable = false)
     @Min(value = 18,message = "Minimum age Should be 18")
     @Max(value = 50,message = "Maximum age should be 50")
     private int age;
-    @Pattern(message="Phone number is not valid", regexp = "^[0-9]{10}$")
+    @Column(nullable = false)
+    @NotEmpty(message = "Contact number Cannot be Empty...!!! ")
+    @Pattern(message="Contact number is not valid", regexp = "^[0-9]{10}$")
     private String contact;
+    @Column(nullable = false)
+    @NotEmpty(message = "Salary Cannot be Empty...!!! ")
     @Min(value = 10000,message = "salary Shoulde be minimum 10000")
     private String salary;
-
+    @Column(nullable = false,unique = true)
+    @NotEmpty(message = "Email Cannot be Empty...!!! ")
     @Email( message = "Email is not valid", regexp = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$")
     private String email;
+    @Column(nullable = false)
    @NotEmpty(message = "Gender can not be Empty")
     private String gender;
     @Column(nullable = false)
+    @NotEmpty(message = "Password Cannot be Empty...!!! ")
     @Pattern(message="password must contain atleast 1 uppercase, 1 lowercase, 1 special character and 1 digit with atleast 8 characters",
             regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$")
     private String password;
@@ -43,6 +53,7 @@ public class Employee implements UserDetails{
     @Column(nullable = true)
     private int organizationid;
     @NotEmpty(message = "Role Can not be empty")
+    @Pattern(message = "Enter Correct Role..!!!",regexp = "^EMPLOYEE$|^ADMIN$|^MANAGER$")
     private String role;
 
     @Override
