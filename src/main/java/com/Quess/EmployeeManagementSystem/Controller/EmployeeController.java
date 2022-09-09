@@ -16,7 +16,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/employee")
+@RequestMapping("/employee/")
 public class EmployeeController {
 
     @Autowired
@@ -30,45 +30,74 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public ResponseEntity<Employee> saveEmployeeDetail(@RequestBody @Valid Employee employee)
-    {
+    public ResponseEntity<?> saveEmployeeDetail(@RequestBody @Valid Employee employee) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userrole = employeeRepository.findByEmail(authentication.getName()).get().getRole();
+        int userorg = employeeRepository.findByEmail(authentication.getName()).get().getOrganizationid();
+        if (userrole.equals("MANAGER") && employee.getRole().equals("ADMIN")) {
+            return new ResponseEntity<String>("Manager Can not Post ADMIN.", HttpStatus.UNAUTHORIZED);
 
+        }
+        if (userrole.equals("MANAGER") && employee.getRole().equals("MANAGER")) {
+            return new ResponseEntity<String>("Manager Can not Post MANAGER.", HttpStatus.UNAUTHORIZED);
+
+        }
+        if (userrole.equals("MANAGER") && employee.getOrganizationid()!=userorg) {
+            return new ResponseEntity<String>("Can not Post to Other Organization.", HttpStatus.UNAUTHORIZED);
+
+        }
         return new ResponseEntity<Employee>(service.saveEmployee(employee), HttpStatus.CREATED);
     }
 
     @GetMapping
-    public List<Employee> getAllEmployee()
-    {
+    public List<Employee> getAllEmployee() {
         return service.getAllEmployee();
     }
-    @GetMapping("{id}")
-    public ResponseEntity<Employee> getEmployeeById(@PathVariable("id")int id)
-    {
-            return new ResponseEntity<Employee>(service.getEmployeeById(id), HttpStatus.OK);
 
-    }
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getEmployeeById(@PathVariable("id") int id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String urole =employeeRepository.findByEmail(authentication.getName()).get().getRole();
+        int uorg =employeeRepository.findByEmail(authentication.getName()).get().getOrganizationid();
+        int userID = employeeRepository.findByEmail(authentication.getName()).get().getId();
+        if(urole.equals("EMPLOYEE") && userID!=id){
+            return new ResponseEntity<String>("Unauthorized Access.", HttpStatus.UNAUTHORIZED);
 
-    @GetMapping("/user/{id}")
-    public ResponseEntity<?> getEmployeeByIde(@PathVariable("id")int id)
-    {
-//        return new ResponseEntity<Employee>(service.getEmployeeById(id), HttpStatus.OK);
-        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
-        int userID=employeeRepository.findByEmail(authentication.getName()).get().getId();
-        if(userID!=id && authentication.getAuthorities().contains(new SimpleGrantedAuthority("EMPLOYEE")))
-        {
-            return new ResponseEntity<String >("Unauthorized Access.",HttpStatus.UNAUTHORIZED);
         }
+        if(urole.equals("MANAGER") && service.getEmployeeById(id).getRole().equals("ADMIN")){
+            return new ResponseEntity<String>("Unauthorized Access.", HttpStatus.UNAUTHORIZED);
 
-        return new ResponseEntity<Employee>(service.getEmployeeById(id),HttpStatus.OK);
+        }
+        if(urole.equals("MANAGER") && service.getEmployeeById(id).getOrganizationid()!=uorg){
+            return new ResponseEntity<String>("Can not see other organization employee.", HttpStatus.UNAUTHORIZED);
 
+        }
+        return new ResponseEntity<Employee>(service.getEmployeeById(id), HttpStatus.OK);
     }
-    @PutMapping("{id}")
-    public ResponseEntity<Employee> updateEmployee(@PathVariable("id")int id,@RequestBody @Valid Employee employee)
-    {
-        ;
-        return new ResponseEntity<Employee>(service.updateEmployee(employee,id), HttpStatus.OK);
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateEmployee(@PathVariable("id") int id, @RequestBody @Valid Employee employee) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userrole = employeeRepository.findByEmail(authentication.getName()).get().getRole();
+        int userorg = employeeRepository.findByEmail(authentication.getName()).get().getOrganizationid();
+        int userID = employeeRepository.findByEmail(authentication.getName()).get().getId();
+        if (userrole.equals("MANAGER") && service.getEmployeeById(id).getRole().equals("ADMIN")) {
+            return new ResponseEntity<String>("Manager Can not Update ADMIN.", HttpStatus.UNAUTHORIZED);
+        }
+        if(userrole.equals("MANAGER") && service.getEmployeeById(id).getOrganizationid()!=userorg){
+            return new ResponseEntity<String>("Can not Update Other organization employee.", HttpStatus.UNAUTHORIZED);
+
+        }
+        if (userrole.equals("MANAGER") && employee.getOrganizationid()!=userorg) {
+            return new ResponseEntity<String>("Can not Update to Other organization employee.", HttpStatus.UNAUTHORIZED);
+        }
+        if (userrole.equals("MANAGER") && service.getEmployeeById(id).getRole().equals("MANAGER") && userID!=id) {
+            return new ResponseEntity<String>("Manager Can not Update other MANAGER.", HttpStatus.UNAUTHORIZED);
+        }
+            return new ResponseEntity<Employee>(service.updateEmployee(employee, id), HttpStatus.OK);
     }
-    @DeleteMapping("{id}")
+
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteEmployeeById(@PathVariable("id")int id)
     {
         service.deleteEmployeeById(id);

@@ -23,29 +23,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST,"/employee").hasAnyAuthority("ADMIN","MANAGER")
+                .antMatchers(HttpMethod.POST,"/employee/").hasAnyAuthority("ADMIN","MANAGER")
                 .antMatchers(HttpMethod.PUT,"/employee/{id}").hasAnyAuthority("ADMIN","MANAGER")
                 .antMatchers(HttpMethod.DELETE,"/employee/{id}").hasAnyAuthority("ADMIN")
-                .antMatchers(HttpMethod.GET,"/employee").hasAnyAuthority("ADMIN","MANAGER")
-                .antMatchers(HttpMethod.GET,"/employee/{id}").hasAnyAuthority("ADMIN","MANAGER")
-                .antMatchers(HttpMethod.GET,"/employee/user/{id}").hasAnyAuthority("EMPLOYEE")
+                .antMatchers(HttpMethod.GET,"/employee/").hasAnyAuthority("ADMIN","MANAGER")
+                .antMatchers(HttpMethod.GET,"/employee/{id}").hasAnyAuthority("ADMIN","MANAGER","EMPLOYEE")
 
                 .antMatchers(HttpMethod.DELETE,"/organization/{id}").hasAnyAuthority("ADMIN")
                 .antMatchers(HttpMethod.GET,"/organization/{id}").hasAnyAuthority("ADMIN","MANAGER","EMPLOYEE")
                 .antMatchers(HttpMethod.PUT,"/organization/{id}").hasAnyAuthority("ADMIN")
-                .antMatchers(HttpMethod.POST,"/organization").hasAnyAuthority("ADMIN")
-                .antMatchers(HttpMethod.GET,"/organization").hasAnyAuthority("ADMIN")
+                .antMatchers(HttpMethod.POST,"/organization/").hasAnyAuthority("ADMIN")
+                .antMatchers(HttpMethod.GET,"/organization/").hasAnyAuthority("ADMIN")
 
-                .antMatchers(HttpMethod.GET,"/assets").hasAnyAuthority("ADMIN","MANAGER","EMPLOYEE")
+                .antMatchers(HttpMethod.GET,"/assets/").hasAnyAuthority("ADMIN","MANAGER","EMPLOYEE")
                 .antMatchers(HttpMethod.DELETE,"/assets/{id}").hasAnyAuthority("ADMIN")
                 .antMatchers(HttpMethod.GET,"/assets/{id}").hasAnyAuthority("ADMIN","MANAGER","EMPLOYEE")
-                .antMatchers(HttpMethod.POST,"/assets").hasAnyAuthority("ADMIN","MANAGER")
+                .antMatchers(HttpMethod.POST,"/assets/").hasAnyAuthority("ADMIN","MANAGER")
                 .antMatchers(HttpMethod.PUT,"/assets/{id}").hasAnyAuthority("ADMIN","MANAGER")
-
-
-
-
-
                 .and().httpBasic();
 
         http.csrf().disable();
